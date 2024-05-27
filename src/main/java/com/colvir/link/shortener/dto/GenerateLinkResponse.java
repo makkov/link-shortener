@@ -1,4 +1,4 @@
-package com.colvir.link_shortener.dto;
+package com.colvir.link.shortener.dto;
 
 import lombok.Data;
 

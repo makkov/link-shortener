@@ -1,9 +1,9 @@
-package com.colvir.link_shortener.service;
+package com.colvir.link.shortener.service;
 
-import com.colvir.link_shortener.dto.GenerateLinkRequest;
-import com.colvir.link_shortener.dto.GenerateLinkResponse;
-import com.colvir.link_shortener.mapper.LinkMapper;
-import com.colvir.link_shortener.model.Link;
+import com.colvir.link.shortener.dto.GenerateLinkRequest;
+import com.colvir.link.shortener.dto.GenerateLinkResponse;
+import com.colvir.link.shortener.mapper.LinkMapper;
+import com.colvir.link.shortener.model.Link;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;

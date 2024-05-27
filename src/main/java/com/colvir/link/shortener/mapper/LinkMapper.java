@@ -1,7 +1,7 @@
-package com.colvir.link_shortener.mapper;
+package com.colvir.link.shortener.mapper;
 
-import com.colvir.link_shortener.dto.GenerateLinkResponse;
-import com.colvir.link_shortener.model.Link;
+import com.colvir.link.shortener.dto.GenerateLinkResponse;
+import com.colvir.link.shortener.model.Link;
 import org.springframework.stereotype.Component;
 
 @Component

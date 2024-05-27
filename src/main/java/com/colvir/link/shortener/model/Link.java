@@ -1,4 +1,4 @@
-package com.colvir.link_shortener.model;
+package com.colvir.link.shortener.model;
 
 import lombok.Data;
 
