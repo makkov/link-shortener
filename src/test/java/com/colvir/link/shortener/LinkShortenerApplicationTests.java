@@ -1,4 +1,4 @@
-package com.colvir.link_shortener;
+package com.colvir.link.shortener;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

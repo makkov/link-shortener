@@ -1,4 +1,4 @@
-package com.colvir.link_shortener;
+package com.colvir.link.shortener;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
