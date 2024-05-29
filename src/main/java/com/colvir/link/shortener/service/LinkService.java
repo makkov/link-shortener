@@ -17,7 +17,7 @@ import java.util.*;
 public class LinkService {
 
     private final Map<String, Link> linkByShortLink = new HashMap<>();
-    private final LinkMapper linkMapper;
+    private final LinkMapper linkMapper = new LinkMapper();
 
     public GenerateLinkResponse generateShortLink(GenerateLinkRequest request) {
         String originalLink = request.getOriginalLink();
