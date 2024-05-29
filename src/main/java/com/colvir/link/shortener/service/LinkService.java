@@ -2,6 +2,7 @@ package com.colvir.link.shortener.service;
 
 import com.colvir.link.shortener.dto.GenerateLinkRequest;
 import com.colvir.link.shortener.dto.GenerateLinkResponse;
+import com.colvir.link.shortener.exception.LinkNotFoundException;
 import com.colvir.link.shortener.mapper.LinkMapper;
 import com.colvir.link.shortener.model.Link;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,11 @@ public class LinkService {
 
     public RedirectView redirectByShortLink(String shortLink) {
         Link link = linkByShortLink.get(shortLink);
+
+        if (link == null) {
+            throw new LinkNotFoundException("Ссылка не найдена");
+        }
+
         return new RedirectView(link.getOriginal());
     }
 }
