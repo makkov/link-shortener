@@ -4,10 +4,7 @@ import com.colvir.link.shortener.model.Link;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 @Repository
@@ -21,19 +18,27 @@ public class LinkRepository {
     public Link save(Link link) {
 
         try {
-            Statement statement = connection.createStatement();
+//            Statement statement = connection.createStatement();
 
 //            INSERT INTO links VALUES(33, 'new link', 'original link');
 
-            String statementString = "INSERT INTO links VALUES("
-                    + link.getId() + ", '"
-                    + link.getShorted() + "', '"
-                    + link.getOriginal() + "')";
+//            String statementString = "INSERT INTO links VALUES("
+//                    + link.getId() + ", '"
+//                    + link.getShorted() + "', '"
+//                    + link.getOriginal() + "')";
+//
+//            System.out.println(statementString);
+//
+//            statement.executeUpdate(statementString);
 
-            System.out.println(statementString);
+            String preparedStatementString = "INSERT INTO links VALUES(?, ?, ?);";
 
-            statement.executeUpdate(statementString);
+            PreparedStatement preparedStatement = connection.prepareStatement(preparedStatementString);
+            preparedStatement.setInt(1, link.getId());
+            preparedStatement.setString(2, link.getShorted());
+            preparedStatement.setString(3, link.getOriginal());
 
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,9 +76,30 @@ public class LinkRepository {
     }
 
     public Optional<Link> findById(Integer id) {
-        return links.stream()
-                .filter(link -> link.getId().equals(id))
-                .findFirst();
+
+        try {
+
+            String preparedStatementString = "SELECT * FROM links WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(preparedStatementString);
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Link link = new Link();
+                link.setId(resultSet.getInt("id"));
+                link.setShorted(resultSet.getString("shorted"));
+                link.setOriginal(resultSet.getString("original"));
+                return Optional.of(link);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 
     public Link update(Link linkForUpdate) {
