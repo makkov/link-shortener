@@ -1,8 +1,8 @@
 package com.colvir.link.shortener.repository;
 
-import com.colvir.link.shortener.mapper.LinkRowMapper;
 import com.colvir.link.shortener.model.Link;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +18,7 @@ public class LinkRepository {
     private final Set<Link> links = new HashSet<>();
 
     private final JdbcTemplate jdbcTemplate;
-    private final LinkRowMapper linkRowMapper;
+    private final BeanPropertyRowMapper<Link> beanPropertyRowMapper = new BeanPropertyRowMapper<>(Link.class);
 
     public Link save(Link link) {
 //        try {
@@ -87,7 +87,7 @@ public class LinkRepository {
 
         String statementString = "SELECT * FROM links";
 
-        return jdbcTemplate.query(statementString, linkRowMapper);
+        return jdbcTemplate.query(statementString, beanPropertyRowMapper);
     }
 
     public Optional<Link> findById(Integer id) {
@@ -116,7 +116,7 @@ public class LinkRepository {
 //        return Optional.empty();
 
         String statementString = "SELECT * FROM links WHERE id = ?";
-        return jdbcTemplate.query(statementString, linkRowMapper, new Object[]{id}).stream()
+        return jdbcTemplate.query(statementString, beanPropertyRowMapper, new Object[]{id}).stream()
                 .findFirst();
     }
 
