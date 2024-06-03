@@ -1,7 +1,6 @@
 package com.colvir.link.shortener.service;
 
-import com.colvir.link.shortener.dto.GenerateLinkRequest;
-import com.colvir.link.shortener.dto.GenerateLinkResponse;
+import com.colvir.link.shortener.dto.*;
 import com.colvir.link.shortener.exception.LinkNotFoundException;
 import com.colvir.link.shortener.mapper.LinkMapper;
 import com.colvir.link.shortener.model.Link;
@@ -20,11 +19,14 @@ public class LinkService {
     private final LinkMapper linkMapper;
     private final LinkRepository linkRepository;
 
+    private Random random = new Random();
+
     public GenerateLinkResponse generateShortLink(GenerateLinkRequest request) {
         String originalLink = request.getOriginalLink();
         String shortLink = Base64.getEncoder().encodeToString(originalLink.getBytes(StandardCharsets.UTF_8));
 
-        Link newLink = new Link(originalLink, shortLink);
+        Link newLink = new Link(random.nextInt(), originalLink, shortLink);
+
         linkRepository.save(newLink);
 
         return linkMapper.linkToGenerateLinkResponse(newLink);
@@ -38,5 +40,37 @@ public class LinkService {
         }
 
         return new RedirectView(link.getOriginal());
+    }
+
+    public LinkPageResponse getAll() {
+        List<Link> allLinks = linkRepository.findAll();
+        return linkMapper.linksToLinkPageResponse(allLinks);
+    }
+
+    public LinkResponse getById(Integer id) {
+        Link link = linkRepository.findById(id)
+                .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", id)));
+        return linkMapper.linkToLinkResponse(link);
+    }
+
+    public LinkResponse update(UpdateLinkRequest request) {
+        Integer linkId = request.getId();
+        Link link = linkRepository.findById(linkId)
+                .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", linkId)));
+
+        Link updatedLink = linkMapper.updateLinkRequestToLink(request);
+
+        linkRepository.update(updatedLink);
+
+        return linkMapper.linkToLinkResponse(updatedLink);
+    }
+
+    public LinkResponse delete(Integer id) {
+        Link link = linkRepository.findById(id)
+                .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", id)));
+
+        linkRepository.delete(id);
+
+        return linkMapper.linkToLinkResponse(link);
     }
 }

@@ -3,9 +3,11 @@ package com.colvir.link.shortener.dto;
 import lombok.Data;
 
 @Data
-public class GenerateLinkResponse {
+public class UpdateLinkRequest {
 
-    private String shorted;
+    private Integer id;
 
     private String original;
+
+    private String shorted;
 }
