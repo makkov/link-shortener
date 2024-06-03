@@ -1,7 +1,6 @@
 package com.colvir.link.shortener.controller;
 
-import com.colvir.link.shortener.dto.GenerateLinkRequest;
-import com.colvir.link.shortener.dto.GenerateLinkResponse;
+import com.colvir.link.shortener.dto.*;
 import com.colvir.link.shortener.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +18,28 @@ public class LinkController {
         return linkService.generateShortLink(request);
     }
 
-    @GetMapping("/{shortLink}")
+    @GetMapping("/go/{shortLink}")
     public RedirectView redirect(@PathVariable String shortLink) {
         return linkService.redirectByShortLink(shortLink);
+    }
+
+    @GetMapping
+    public LinkPageResponse getAll() {
+        return linkService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public LinkResponse getById(@PathVariable("id") Integer id) {
+        return linkService.getById(id);
+    }
+
+    @PutMapping
+    public LinkResponse update(@RequestBody UpdateLinkRequest request) {
+        return linkService.update(request);
+    }
+
+    @DeleteMapping("/{id}")
+    public LinkResponse delete(@RequestBody UpdateLinkRequest request) {
+        return linkService.update(request);
     }
 }
