@@ -39,7 +39,7 @@ public class LinkController {
     }
 
     @DeleteMapping("/{id}")
-    public LinkResponse delete(@RequestBody UpdateLinkRequest request) {
-        return linkService.update(request);
+    public LinkResponse delete(@PathVariable Integer id) {
+        return linkService.delete(id);
     }
 }
