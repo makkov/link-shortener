@@ -1,17 +1,26 @@
 package com.colvir.link.shortener.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@Table(name = "links")
+@Entity
 @NoArgsConstructor
 public class Link {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "link_seq")
+    @SequenceGenerator(name = "link_seq", sequenceName = "link_sequence", allocationSize = 1)
     private Integer id;
 
     private String original;
 
     private String shorted;
+
+    public Link(String original, String shorted) {
+        this.original = original;
+        this.shorted = shorted;
+    }
 }
