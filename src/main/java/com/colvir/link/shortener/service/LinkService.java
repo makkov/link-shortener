@@ -19,13 +19,11 @@ public class LinkService {
     private final LinkMapper linkMapper;
     private final LinkRepository linkRepository;
 
-    private Random random = new Random();
-
     public GenerateLinkResponse generateShortLink(GenerateLinkRequest request) {
         String originalLink = request.getOriginalLink();
         String shortLink = Base64.getEncoder().encodeToString(originalLink.getBytes(StandardCharsets.UTF_8));
 
-        Link newLink = new Link(random.nextInt(), originalLink, shortLink);
+        Link newLink = new Link(originalLink, shortLink);
 
         linkRepository.save(newLink);
 

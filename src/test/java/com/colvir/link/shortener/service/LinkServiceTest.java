@@ -56,7 +56,7 @@ class LinkServiceTest {
         String shortLink = "aHR0cHM6Ly95YS5ydQ==";
 
         //Подготовка ожидаемого результата
-        Link link = new Link(1, "https://ya.ru", shortLink);
+        Link link = new Link("https://ya.ru", shortLink);
         when(linkRepository.getByShorted(shortLink)).thenReturn(link);
 
         RedirectView expectedRedirectView = new RedirectView("https://ya.ru");
