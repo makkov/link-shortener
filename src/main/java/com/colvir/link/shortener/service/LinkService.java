@@ -31,7 +31,7 @@ public class LinkService {
     }
 
     public RedirectView redirectByShortLink(String shortLink) {
-        Link link = linkRepository.getByShorted(shortLink);
+        Link link = linkRepository.findByShorted(shortLink);
 
         if (link == null) {
             throw new LinkNotFoundException("Ссылка не найдена");
@@ -56,9 +56,9 @@ public class LinkService {
         Link link = linkRepository.findById(linkId)
                 .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", linkId)));
 
-        Link updatedLink = linkMapper.updateLinkRequestToLink(request);
+        Link updatedLink = linkMapper.updateLinkRequestToLink(request);//todo затираются поля
 
-        linkRepository.update(updatedLink);
+        linkRepository.save(updatedLink);
 
         return linkMapper.linkToLinkResponse(updatedLink);
     }
@@ -67,7 +67,7 @@ public class LinkService {
         Link link = linkRepository.findById(id)
                 .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", id)));
 
-        linkRepository.delete(id);
+        linkRepository.deleteById(id);
 
         return linkMapper.linkToLinkResponse(link);
     }
