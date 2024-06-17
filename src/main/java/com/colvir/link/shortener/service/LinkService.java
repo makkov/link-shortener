@@ -6,12 +6,15 @@ import com.colvir.link.shortener.mapper.LinkMapper;
 import com.colvir.link.shortener.model.Link;
 import com.colvir.link.shortener.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.List;
+
+import static com.colvir.link.shortener.model.LinkStatus.CREATED;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class LinkService {
         String originalLink = request.getOriginalLink();
         String shortLink = Base64.getEncoder().encodeToString(originalLink.getBytes(StandardCharsets.UTF_8));
 
-        Link newLink = new Link(originalLink, shortLink);
+        Link newLink = new Link(originalLink, shortLink, CREATED);
 
         linkRepository.save(newLink);
 
@@ -41,9 +44,9 @@ public class LinkService {
         return new RedirectView(link.getOriginal());
     }
 
-    public LinkPageResponse getAll() {
-        List<Link> allLinks = linkRepository.findAll();
-        return linkMapper.linksToLinkPageResponse(allLinks);
+    public LinkPageResponse getAll(Integer page, Integer size) {
+        Page<Link> linkPage = linkRepository.findAll(PageRequest.of(page, size));
+        return linkMapper.linksToLinkPageResponse(linkPage.stream().toList());
     }
 
     public LinkResponse getById(Integer id) {

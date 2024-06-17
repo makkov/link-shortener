@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Table(name = "links")
 @Entity
@@ -19,8 +21,14 @@ public class Link {
 
     private String shorted;
 
-    public Link(String original, String shorted) {
+    private BigDecimal salary;
+
+    @Enumerated(value = EnumType.STRING)
+    private LinkStatus status;
+
+    public Link(String original, String shorted, LinkStatus status) {
         this.original = original;
         this.shorted = shorted;
+        this.status = status;
     }
 }

@@ -24,8 +24,8 @@ public class LinkController {
     }
 
     @GetMapping
-    public LinkPageResponse getAll() {
-        return linkService.getAll();
+    public LinkPageResponse getAll(@RequestParam Integer page, @RequestParam Integer size) {
+        return linkService.getAll(page, size);
     }
 
     @GetMapping("/{id}")

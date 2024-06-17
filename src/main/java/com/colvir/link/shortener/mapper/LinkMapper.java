@@ -6,6 +6,7 @@ import com.colvir.link.shortener.dto.LinkResponse;
 import com.colvir.link.shortener.dto.UpdateLinkRequest;
 import com.colvir.link.shortener.model.Link;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface LinkMapper {
 
     List<LinkResponse> linksToLinkResponse(List<Link> links);
 
+    @Mapping(target = "status", ignore = true)
     Link updateLinkRequestToLink(UpdateLinkRequest request);
 
     default LinkPageResponse linksToLinkPageResponse(List<Link> links) {
