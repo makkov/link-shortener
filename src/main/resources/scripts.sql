@@ -23,3 +23,5 @@ SELECT COUNT(*)
 FROM links
 WHERE original like param
     $$
+
+create index links_shorted_idx on links(shorted);
