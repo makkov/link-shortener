@@ -19,8 +19,12 @@ public class Link {
 
     private String shorted;
 
-    public Link(String original, String shorted) {
+    @Enumerated(value = EnumType.STRING)
+    private LinkStatus status;
+
+    public Link(String original, String shorted, LinkStatus status) {
         this.original = original;
         this.shorted = shorted;
+        this.status = status;
     }
 }

@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
+import static com.colvir.link.shortener.model.LinkStatus.CREATED;
+
 @Service
 @RequiredArgsConstructor
 public class LinkService {
@@ -24,7 +26,7 @@ public class LinkService {
         String originalLink = request.getOriginalLink();
         String shortLink = Base64.getEncoder().encodeToString(originalLink.getBytes(StandardCharsets.UTF_8));
 
-        Link newLink = new Link(originalLink, shortLink);
+        Link newLink = new Link(originalLink, shortLink, CREATED);
 
         linkRepository.save(newLink);
 
