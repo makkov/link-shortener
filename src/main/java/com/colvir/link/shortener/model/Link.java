@@ -21,8 +21,6 @@ public class Link {
 
     private String shorted;
 
-    private BigDecimal salary;
-
     @Enumerated(value = EnumType.STRING)
     private LinkStatus status;
 
