@@ -1,12 +1,16 @@
 package com.colvir.link.shortener.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Table(name = "links")
+@Builder(setterPrefix = "set")
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 public class Link {
 

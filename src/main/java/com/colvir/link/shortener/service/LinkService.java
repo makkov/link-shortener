@@ -4,6 +4,7 @@ import com.colvir.link.shortener.dto.*;
 import com.colvir.link.shortener.exception.LinkNotFoundException;
 import com.colvir.link.shortener.mapper.LinkMapper;
 import com.colvir.link.shortener.model.Link;
+import com.colvir.link.shortener.model.LinkStatus;
 import com.colvir.link.shortener.repository.LinkCacheRepository;
 import com.colvir.link.shortener.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Base64;
 import java.util.Optional;
 
 import static com.colvir.link.shortener.model.LinkStatus.CREATED;
+import static com.colvir.link.shortener.model.LinkStatus.UPDATED;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +64,8 @@ public class LinkService {
         Link link = linkRepository.findById(linkId)
                 .orElseThrow(() -> new LinkNotFoundException(String.format("Ссылка с id = %s не найдена", linkId)));
 
-        Link updatedLink = linkMapper.updateLinkRequestToLink(request);//todo затираются поля
+        Link updatedLink = linkMapper.updateLinkRequestToLink(link, request);
+        updatedLink.setStatus(UPDATED);
 
         linkRepository.save(updatedLink);
 
