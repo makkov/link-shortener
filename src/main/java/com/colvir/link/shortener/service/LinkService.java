@@ -4,7 +4,6 @@ import com.colvir.link.shortener.dto.*;
 import com.colvir.link.shortener.exception.LinkNotFoundException;
 import com.colvir.link.shortener.mapper.LinkMapper;
 import com.colvir.link.shortener.model.Link;
-import com.colvir.link.shortener.model.LinkStatus;
 import com.colvir.link.shortener.repository.LinkCacheRepository;
 import com.colvir.link.shortener.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
