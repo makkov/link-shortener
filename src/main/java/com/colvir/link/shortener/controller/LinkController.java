@@ -3,10 +3,11 @@ package com.colvir.link.shortener.controller;
 import com.colvir.link.shortener.dto.*;
 import com.colvir.link.shortener.service.LinkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
+@Controller
 @RequestMapping("link")
 @RequiredArgsConstructor
 public class LinkController {
