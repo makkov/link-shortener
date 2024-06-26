@@ -13,17 +13,26 @@ public class LinkController {
 
     private final LinkService linkService;
 
+
+    //    ADMIN
+    @PutMapping
+    public LinkResponse update(@RequestBody UpdateLinkRequest request) {
+        return linkService.update(request);
+    }
+
+    //    ADMIN
+    @DeleteMapping("/{id}")
+    public LinkResponse delete(@PathVariable Integer id) {
+        return linkService.delete(id);
+    }
+
+    //    USER
     @PostMapping("generate")
     public GenerateLinkResponse generateLink(@RequestBody GenerateLinkRequest request) {
         return linkService.generateShortLink(request);
     }
 
-    @GetMapping("/go/{shortLink}")
-    public RedirectView redirect(@PathVariable String shortLink) {
-        return linkService.redirectByShortLink(shortLink);
-    }
-
-    @GetMapping
+    @GetMapping("/all")
     public LinkPageResponse getAll(@RequestParam Integer page, @RequestParam Integer size) {
         return linkService.getAll(page, size);
     }
@@ -33,13 +42,8 @@ public class LinkController {
         return linkService.getById(id);
     }
 
-    @PutMapping
-    public LinkResponse update(@RequestBody UpdateLinkRequest request) {
-        return linkService.update(request);
-    }
-
-    @DeleteMapping("/{id}")
-    public LinkResponse delete(@PathVariable Integer id) {
-        return linkService.delete(id);
+    @GetMapping("/go/{shortLink}")
+    public RedirectView redirect(@PathVariable String shortLink) {
+        return linkService.redirectByShortLink(shortLink);
     }
 }
