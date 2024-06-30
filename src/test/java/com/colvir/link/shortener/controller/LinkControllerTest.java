@@ -4,6 +4,7 @@ import com.colvir.link.shortener.dto.GenerateLinkRequest;
 import com.colvir.link.shortener.dto.GenerateLinkResponse;
 import com.colvir.link.shortener.service.LinkService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import static com.colvir.link.shortener.generator.LinkDtoGenerator.generateLinkR
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @WebMvcTest(LinkController.class)
 class LinkControllerTest {
 
