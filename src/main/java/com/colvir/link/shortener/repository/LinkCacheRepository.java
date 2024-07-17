@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -57,7 +56,7 @@ public class LinkCacheRepository {
         return link;
     }
 
-    @Scheduled(fixedDelay = 1L)
+    //    @Scheduled(fixedDelay = 1L)
     public void clearAll() {
         Set<String> keys = redisTemplate.keys("*");
         if (keys == null) {
