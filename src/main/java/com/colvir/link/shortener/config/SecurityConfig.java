@@ -43,6 +43,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
+                                .requestMatchers("/actuator/**").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/link/**").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/link/**").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/link/**").hasAuthority("USER")
