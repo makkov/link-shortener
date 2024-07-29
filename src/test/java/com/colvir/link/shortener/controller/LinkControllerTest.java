@@ -4,31 +4,41 @@ import com.colvir.link.shortener.dto.GenerateLinkRequest;
 import com.colvir.link.shortener.dto.GenerateLinkResponse;
 import com.colvir.link.shortener.service.LinkService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static com.colvir.link.shortener.generator.LinkDtoGenerator.generateLinkRequestBuilder;
 import static com.colvir.link.shortener.generator.LinkDtoGenerator.generateLinkResponseBuilder;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
 @WebMvcTest(LinkController.class)
 class LinkControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext context;
+
     @InjectMocks
     private LinkController linkController;
+
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
 
     @MockBean
     private LinkService linkService;
@@ -36,6 +46,7 @@ class LinkControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
+    @WithMockUser
     void generateLink_success() throws Exception {
 
         GenerateLinkRequest req = generateLinkRequestBuilder()

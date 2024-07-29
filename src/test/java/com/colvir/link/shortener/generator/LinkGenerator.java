@@ -13,11 +13,16 @@ public class LinkGenerator {
     public static final String ORIGINAL_LINK = "https://ya.ru";
     public static final String SHORTED_LINK = Base64.getEncoder().encodeToString(ORIGINAL_LINK.getBytes(StandardCharsets.UTF_8));
 
-    public static Link.LinkBuilder generateLinkAfterCreateBuilder() {
+    public static Link.LinkBuilder generateLinkBeforePersist() {
+
         return Link.builder()
-                .setId(LINK_ID)
                 .setOriginal(ORIGINAL_LINK)
                 .setShorted(SHORTED_LINK);
+    }
+
+    public static Link.LinkBuilder generateLinkAfterCreateBuilder() {
+        return generateLinkBeforePersist()
+                .setId(LINK_ID);
     }
 
     public static Link.LinkBuilder generateLinkAfterUpdateBuilder(String newOriginalField) {
